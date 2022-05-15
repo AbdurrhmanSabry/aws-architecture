@@ -4,15 +4,28 @@ pipeline {
        terraform 'terraform'
     }
     stages {
-        stage('terraform format check') {
+        stage('terraform format') {
             steps{
                 withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
                 sh 'terraform fmt'
+                }
+            }
+        }
+        stage('terraform init'){
+          steps{
+             withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
                 sh 'terraform init'
                 // sh 'terraform workspace new dev'
                 sh 'terraform apply --auto-approve --var-file dev.tfvars'
                 }
-            }
+          }
+        }
+        stage('terraform build'){
+          steps{
+             withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
+                sh 'terraform apply --auto-approve --var-file dev.tfvars'
+                }
+          }
         }
     // stage('clean workspace') {
     //   steps {
