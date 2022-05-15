@@ -16,7 +16,6 @@ pipeline {
              withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
                 sh 'terraform init'
                 // sh 'terraform workspace new dev'
-                sh 'terraform apply --auto-approve --var-file dev.tfvars'
                 }
           }
         }
