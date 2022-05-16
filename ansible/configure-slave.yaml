@@ -1,0 +1,43 @@
+- name: Configure a slave Jenkins
+  hosts: slaves
+  gather_facts: false
+  tasks:
+  - name: updating all packages 
+    yum:
+      update_cache: yes
+  - name: installing docker 
+    yum: 
+      name: docker
+      state: latest
+  - name: installing Java
+    yum:
+      name: java-1.8.0-openjdk
+      state: present
+  - name: Starting docker sservice
+    service:
+      name: docker
+      state: started
+      enabled: yes
+  - name: create slave directory
+    file:
+      path: /home/ec2-user/jenkins_home
+      state: directory
+      mode:   0777
+  - name: Adding the ec2-user to the docker group
+    user:
+      name: ec2-user
+      groups: docker
+      append: yes
+  - name: Creating bin directory 
+    file: 
+      path: /home/ec2-user/bin
+      state: directory
+      mode: 0777
+  - name: copying the agent jar to the slave 
+    copy:
+      src: /home/abdurrhman/terraform/ansible/agent.jar
+      dest: /home/ec2-user/bin/agent.jar
+  - name: install git 
+    yum:
+      name: git
+      state: latest

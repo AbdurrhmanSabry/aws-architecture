@@ -1,0 +1,22 @@
+- name: Configure as a nginx proxy
+  hosts: proxy
+  gather_facts: false
+  tasks:
+  - name: updating all packages 
+    yum:
+      update_cache: yes
+  - name: installing nginx 
+    command: "amazon-linux-extras install nginx1 -y"
+  - name: starting nginx 
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+  - name: copying the nginx Config 
+    copy: 
+      src: /home/abdurrhman/terraform/ansible/nginx.conf
+      dest: /etc/nginx/nginx.conf
+  - name: restarting nginx service 
+    service:
+      name: nginx 
+      state: restarted
