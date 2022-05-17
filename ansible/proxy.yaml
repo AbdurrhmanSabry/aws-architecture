@@ -14,7 +14,7 @@
       enabled: yes
   - name: copying the nginx Config 
     copy: 
-      src: /home/abdurrhman/terraform/ansible/nginx.conf
+      src: /home/abdurrhman/terraform/lab1/ansible/nginx.conf
       dest: /etc/nginx/nginx.conf
   - name: restarting nginx service 
     service:

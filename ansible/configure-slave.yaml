@@ -35,7 +35,7 @@
       mode: 0777
   - name: copying the agent jar to the slave 
     copy:
-      src: /home/abdurrhman/terraform/ansible/agent.jar
+      src: /home/abdurrhman/terraform/lab1/ansible/agent.jar
       dest: /home/ec2-user/bin/agent.jar
   - name: install git 
     yum:
