@@ -30,9 +30,10 @@ pipeline {
             sh 'cat ./ansible/group_vars/proxy.yaml'
             sh 'cat ./ansible/group_vars/slaves.yaml'
             sh 'cd ansible'
+            sh 'ansible --version'
             ansiblePlaybook( 
-              playbook: './ping.yaml',
-              inventory: './inventory', 
+              playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
+              inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
               credentialsId: 'ansible-us-east',
               colorized: true) 
             }
