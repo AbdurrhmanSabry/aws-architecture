@@ -7,21 +7,21 @@ pipeline {
         stage('terraform format') {
             steps{
                 withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
-                sh 'terraform fmt'
+                sh 'terraform -chdir=./terraform fmt'
                 }
             }
         }
         stage('terraform init'){
           steps{
              withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
-                sh 'terraform init'
+                sh 'terraform -chdir=./terraform init'
                 }
           }
         }
         stage('terraform build'){
           steps{
              withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
-                sh 'terraform destroy --auto-approve --var-file dev.tfvars'
+                sh 'terraform -chdir=./terraform  destroy --auto-approve --var-file dev.tfvars'
                 }
           }
         }
