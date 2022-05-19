@@ -15,7 +15,10 @@ resource "aws_instance" "bastion-ec2" {
   }
   provisioner "local-exec" {
     # command = "echo  ${self.availability_zone} >> bastion_public_ips.txt"
-    command = "sed -i 's/.*ansible_host.*/ansible_host: ${self.public_ip}/' ./ansible/group_vars/proxy.yaml"
+    command = <<-EOT
+              sed -i 's/.*ansible_host.*/ansible_host: ${self.public_ip}/' ./ansible/group_vars/proxy.yaml
+              sed -t 's/HostName.*/HostName ${self.public_ip}/' /var/jenkins_home/.ssh/config
+      EOT
   }
 }
 
@@ -33,7 +36,11 @@ resource "aws_instance" "application" {
   #       }
 
   provisioner "local-exec" {
-    command = "sed -i 's/.*ansible_host.*/ansible_host: ${self.private_ip}/' ./ansible/group_vars/slaves.yaml"
+  //  command = "sed -i 's/.*ansible_host.*/ansible_host: ${self.private_ip}/' ./ansible/group_vars/slaves.yaml"
+    command = <<-EOT
+          sed -i 's/.*ansible_host.*/ansible_host: ${self.private_ip}/' ./ansible/group_vars/slaves.yaml
+          sed -i 's#proxy_pass.*#proxy_pass http://${self.private_ip}:3000;#' ./ansible/files/nginx.conf
+        EOT
   }
   tags = {
     Name = "application"
