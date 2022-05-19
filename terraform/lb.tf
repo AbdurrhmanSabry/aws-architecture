@@ -14,11 +14,11 @@ resource "aws_lb_target_group" "tg" {
   protocol    = "HTTP"
   vpc_id      = module.network.vpc_id
 }
-# resource "aws_lb_target_group_attachment" "tg-attachment" {
-#   target_group_arn = aws_lb_target_group.tg.arn
-#   target_id        = aws_instance.bastion-ec2.id
-#   port             = 80
-# }
+resource "aws_lb_target_group_attachment" "tg-attachment" {
+  target_group_arn = aws_lb_target_group.tg.arn
+  target_id        = aws_instance.bastion-ec2.id
+  port             = 80
+}
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
