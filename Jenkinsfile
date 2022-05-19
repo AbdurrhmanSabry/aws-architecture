@@ -32,7 +32,6 @@ pipeline {
             sh 'cd ansible'
             sh 'eval `ssh-agent -s`'
             //sh 'ssh -J ec2-user@bastion ec2-user@10.0.3.133 ls /home'
-            sh 'ansible --version'
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
               inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
