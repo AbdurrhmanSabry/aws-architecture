@@ -71,3 +71,6 @@ output "rds-endpoint" {
 output "elasticache-endpoint" {
     value = aws_elasticache_cluster.cache_cluster.configuration_endpoint
 }
+output "alb-dns" {
+    value = aws_lb.alb.dns_name
+}

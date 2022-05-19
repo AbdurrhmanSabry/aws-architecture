@@ -2,6 +2,7 @@ resource "aws_lb" "alb" {
   name               = "alb"
   internal           = false
   load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb-sg.id]
   subnets            = [module.network.sub-public_one_id,module.network.sub-public_two_id] 
   tags = {
     name = "prod-alb"
