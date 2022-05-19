@@ -31,6 +31,7 @@ pipeline {
             sh 'cat ./ansible/group_vars/proxy.yaml'
             sh 'cat ./ansible/group_vars/slaves.yaml'
             sh 'cd ansible'
+            sh 'ansible all -m ping'
           }
         }
     // stage('clean workspace') {
