@@ -35,18 +35,36 @@ pipeline {
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
               inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
               credentialsId: 'ansible-us-east',
+              become : true,
+              becomeUser:'ec2-user',
+              hostKeyChecking:false,
+              installation;'ansible',
+              sudo: true,
+              sudoUser: 'root',
               colorized: true) 
             // configure the private instance as a Jenkins slave 
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/configure-slave.yaml',
               inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
               credentialsId: 'ansible-us-east',
+              become : true,
+              becomeUser:'ec2-user',
+              hostKeyChecking:false,
+              installation;'ansible',
+              sudo: true,
+              sudoUser: 'root',
               colorized: true) 
             // configure the public as a nginx proxy for the Jenkins slave
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/proxy.yaml',
               inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
               credentialsId: 'ansible-us-east',
+              become : true,
+              becomeUser:'ec2-user',
+              hostKeyChecking:false,
+              installation;'ansible',
+              sudo: true,
+              sudoUser: 'root',
               colorized: true) 
           }
         }
