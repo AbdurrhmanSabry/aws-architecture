@@ -38,7 +38,7 @@ pipeline {
               become : true,
               becomeUser:'ec2-user',
               hostKeyChecking:false,
-              installation;'ansible',
+              installation:'ansible',
               sudo: true,
               sudoUser: 'root',
               colorized: true) 
@@ -50,7 +50,7 @@ pipeline {
               become : true,
               becomeUser:'ec2-user',
               hostKeyChecking:false,
-              installation;'ansible',
+              installation:'ansible',
               sudo: true,
               sudoUser: 'root',
               colorized: true) 
@@ -62,7 +62,7 @@ pipeline {
               become : true,
               becomeUser:'ec2-user',
               hostKeyChecking:false,
-              installation;'ansible',
+              installation:'ansible',
               sudo: true,
               sudoUser: 'root',
               colorized: true) 
