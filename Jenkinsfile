@@ -31,16 +31,16 @@ pipeline {
             sh 'cat ./ansible/group_vars/slaves.yaml'
             sh 'cd ansible'
             // ping the hosts 
-            ansiblePlaybook( 
-              playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
-              inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
-              credentialsId: 'ansible-us-east',
-              become : true,
-              becomeUser:'root',
-              hostKeyChecking:false,
-              installation:'ansible',
-              sudo: true,
-              colorized: true) 
+            // ansiblePlaybook( 
+            //   playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
+            //   inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
+            //   credentialsId: 'ansible-us-east',
+            //   become : true,
+            //   becomeUser:'root',
+            //   hostKeyChecking:false,
+            //   installation:'ansible',
+            //   sudo: true,
+            //   colorized: true) 
             // configure the private instance as a Jenkins slave 
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/configure-slave.yaml',
@@ -50,7 +50,7 @@ pipeline {
               becomeUser:'root',
               hostKeyChecking:false,
               installation:'ansible',
-              sudo: true,
+             // sudo: true,
               colorized: true) 
             // configure the public as a nginx proxy for the Jenkins slave
             ansiblePlaybook( 
@@ -61,7 +61,7 @@ pipeline {
               becomeUser:'root',
               hostKeyChecking:false,
               installation:'ansible',
-              sudo: true,
+             // sudo: true,
               colorized: true) 
           }
         }
