@@ -59,7 +59,7 @@ output "application_sq" {
     value = aws_security_group.PrivateSec.id
 }
 
-output "puplic-ip-ec2" {
+output "public-ip-ec2" {
   value = aws_instance.bastion-ec2.public_ip
 }
 output "private-ec2-ip" {
