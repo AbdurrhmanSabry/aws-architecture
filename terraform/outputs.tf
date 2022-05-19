@@ -65,3 +65,9 @@ output "puplic-ip-ec2" {
 output "private-ec2-ip" {
   value = aws_instance.application.private_ip
 }
+output "rds-endpoint" {
+    value = aws_db_instance.mydb.endpoint
+}
+output "elasticache-endpoint" {
+    value = aws_elasticache_cluster.cache_cluster.configuration_endpoint
+}
