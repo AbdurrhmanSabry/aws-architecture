@@ -2,6 +2,7 @@ pipeline {
   agent any
     tools {
        terraform 'terraform'
+       ansible 'ansible'
     }
     stages {
         stage('terraform format') {
@@ -15,7 +16,6 @@ pipeline {
           steps{
              withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
                 sh 'terraform init'
-                // sh 'terraform workspace new dev'
                 }
           }
         }
@@ -24,6 +24,13 @@ pipeline {
              withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
                 sh 'terraform apply --auto-approve --var-file dev.tfvars'
                 }
+          }
+        }
+        stage('Testing outcome of local provisioner'){
+          steps{
+            sh 'cat ./ansible/group_vars/proxy.yaml'
+            sh 'cat ./ansible/group_vars/slaves.yaml'
+            sh 'cd ansible'
           }
         }
     // stage('clean workspace') {
