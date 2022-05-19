@@ -2,7 +2,6 @@ pipeline {
   agent any
     tools {
        terraform 'terraform'
-       ansible 'ansible'
     }
     stages {
         stage('terraform format') {
@@ -31,8 +30,12 @@ pipeline {
             sh 'cat ./ansible/group_vars/proxy.yaml'
             sh 'cat ./ansible/group_vars/slaves.yaml'
             sh 'cd ansible'
-            sh 'ansible all -m ping'
-          }
+            ansiblePlaybook( 
+              playbook: './ping.yaml',
+              inventory: './inventory', 
+              credentialsId: 'ansible-us-east',
+              colorized: true) 
+            }
         }
     // stage('clean workspace') {
     //   steps {
@@ -42,8 +45,3 @@ pipeline {
     }
      
   }
-/* Plugins
-1. Pipeline AWS steps to use the with
-2. cloudBees AWS credentials to save the credentials in jenkins
-
-*/ 
