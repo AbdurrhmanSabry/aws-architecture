@@ -2,6 +2,7 @@ pipeline {
   agent any
     tools {
        terraform 'terraform'
+       ansible 'ansible'
     }
     stages {
         stage('terraform format') {
@@ -30,6 +31,8 @@ pipeline {
             sh 'cat ./ansible/group_vars/proxy.yaml'
             sh 'cat ./ansible/group_vars/slaves.yaml'
             sh 'cd ansible'
+            sh 'eval `ssh-agent -s`'
+            //sh 'ssh -J ec2-user@bastion ec2-user@10.0.3.133 ls /home'
             sh 'ansible --version'
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
