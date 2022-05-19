@@ -4,6 +4,11 @@ pipeline {
        terraform 'terraform'
     }
     stages {
+        stage('clean workspace') {
+          steps {
+            cleanWs()
+          }   
+        }
         stage('terraform format') {
             steps{
                 withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
@@ -52,6 +57,7 @@ pipeline {
               hostKeyChecking:false,
               installation:'ansible',
               colorized: true) 
+
             // configure the private instance as a Jenkins slave 
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/configure-slave.yaml',
@@ -62,6 +68,7 @@ pipeline {
               hostKeyChecking:false,
               installation:'ansible',
               colorized: true) 
+
             // configure the public as a nginx proxy for the Jenkins slave
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/proxy.yaml',
