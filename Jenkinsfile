@@ -29,7 +29,7 @@ pipeline {
           steps{
             sh 'cat ./ansible/group_vars/proxy.yaml'
             sh 'cat ./ansible/group_vars/slaves.yaml'
-
+            sh 'cd ansible'
             // ping the hosts 
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
