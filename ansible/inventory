@@ -1,3 +1,4 @@
+localhost ansible_host=localhost
 [slaves]
 slave-a 
 [proxy]

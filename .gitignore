@@ -2,6 +2,7 @@
 us-eastkey.pem
 eu-centralkey.pem
 bastion_public_ips.txt
-.mysqland-elasticcahe
+.mysqland-elasticcahe.txt
 redis-stable.tar.gz
 redis-stable
+*.pem*

@@ -7,40 +7,53 @@ pipeline {
         stage('terraform format') {
             steps{
                 withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
-                sh 'terraform fmt'
+                sh 'terraform -chdir=./terraform fmt'
                 }
             }
         }
         stage('terraform init'){
           steps{
              withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
-                sh 'terraform init'
+                sh 'terraform -chdir=./terraform init'
                 }
           }
         }
-        stage('terraform build'){
+        stage('terraform plan'){
           steps{
              withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
-                sh 'terraform apply --auto-approve --var-file dev.tfvars'
+               sh 'terraform -chdir=./terraform plan --var-file dev.tfvars'
+             }
+          }
+        }
+        stage('terraform build and using outputs'){
+          steps{
+             withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
+                sh 'terraform -chdir=./terraform apply --auto-approve --var-file dev.tfvars '
+                sh 'chmod +x ips-script.sh'
+                sh './ips-script.sh'
+                sh 'cat /var/jenkins_home/.ssh/config'
+                sh 'cat ./ansible/group_vars/slaves.yaml'
+                sh 'cat ./ansible/group_vars/proxy.yaml'
+                sh 'cat ./ansible/files/nginx.conf'
                 }
           }
         }
-        stage('Testing outcome of local provisioner'){
+        
+        stage('Ansible Configuration'){
           steps{
             sh 'cat ./ansible/group_vars/proxy.yaml'
             sh 'cat ./ansible/group_vars/slaves.yaml'
             sh 'cd ansible'
             // ping the hosts 
-            // ansiblePlaybook( 
-            //   playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
-            //   inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
-            //   credentialsId: 'ansible-us-east',
-            //   become : true,
-            //   becomeUser:'root',
-            //   hostKeyChecking:false,
-            //   installation:'ansible',
-            //   sudo: true,
-            //   colorized: true) 
+            ansiblePlaybook( 
+              playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
+              inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
+              credentialsId: 'ansible-us-east',
+              become : true,
+              becomeUser:'root',
+              hostKeyChecking:false,
+              installation:'ansible',
+              colorized: true) 
             // configure the private instance as a Jenkins slave 
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/configure-slave.yaml',
@@ -50,7 +63,6 @@ pipeline {
               becomeUser:'root',
               hostKeyChecking:false,
               installation:'ansible',
-             // sudo: true,
               colorized: true) 
             // configure the public as a nginx proxy for the Jenkins slave
             ansiblePlaybook( 
@@ -61,7 +73,6 @@ pipeline {
               becomeUser:'root',
               hostKeyChecking:false,
               installation:'ansible',
-             // sudo: true,
               colorized: true) 
           }
         }
