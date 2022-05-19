@@ -62,6 +62,6 @@ output "application_sq" {
 output "puplic-ip-ec2" {
   value = aws_instance.application.public_ip
 }
-output "name" {
+output "private-ec2-ip" {
   value = aws_instance.bastion-ec2.private_ip
 }
