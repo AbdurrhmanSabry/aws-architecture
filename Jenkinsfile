@@ -2,7 +2,7 @@ pipeline {
   agent any
     tools {
        terraform 'terraform'
-       //ansible 'ansible'
+       Ansible 'ansible'
     }
     stages {
         stage('terraform format') {
@@ -31,7 +31,7 @@ pipeline {
             sh 'cat ./ansible/group_vars/proxy.yaml'
             sh 'cat ./ansible/group_vars/slaves.yaml'
             sh 'cd ansible'
-            //sh 'ansible all -m ping'
+            sh 'ansible all -m ping'
           }
         }
     // stage('clean workspace') {
