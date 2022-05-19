@@ -2,7 +2,7 @@ pipeline {
   agent any
     tools {
        terraform 'terraform'
-       Ansible 'ansible'
+       ansible 'ansible'
     }
     stages {
         stage('terraform format') {
