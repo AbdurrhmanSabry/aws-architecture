@@ -29,15 +29,26 @@ pipeline {
           steps{
             sh 'cat ./ansible/group_vars/proxy.yaml'
             sh 'cat ./ansible/group_vars/slaves.yaml'
-            sh 'cd ansible'
-            sh 'eval `ssh-agent -s`'
-            //sh 'ssh -J ec2-user@bastion ec2-user@10.0.3.133 ls /home'
+
+            // ping the hosts 
             ansiblePlaybook( 
               playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/ping.yaml',
               inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
               credentialsId: 'ansible-us-east',
               colorized: true) 
-            }
+            // configure the private instance as a Jenkins slave 
+            ansiblePlaybook( 
+              playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/configure-slave.yaml',
+              inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
+              credentialsId: 'ansible-us-east',
+              colorized: true) 
+            // configure the public as a nginx proxy for the Jenkins slave
+            ansiblePlaybook( 
+              playbook: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/proxy.yaml',
+              inventory: '/var/jenkins_home/workspace/infrastructure-pipeline/ansible/inventory', 
+              credentialsId: 'ansible-us-east',
+              colorized: true) 
+          }
         }
     // stage('clean workspace') {
     //   steps {
