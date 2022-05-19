@@ -3,6 +3,7 @@ resource "aws_db_instance" "mydb" {
   engine               = "mysql"
   engine_version       = "8.0.28"
   instance_class       = "db.t2.micro"
+  db_name                 = "mydb"
   username             = "admin"
   password             = "admin123456789"
   db_subnet_group_name = aws_db_subnet_group.mydb_sub_group.name
