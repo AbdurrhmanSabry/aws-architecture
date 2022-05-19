@@ -4,11 +4,6 @@ pipeline {
        terraform 'terraform'
     }
     stages {
-        stage('clean workspace') {
-          steps {
-            cleanWs()
-          }   
-        }
         stage('terraform format') {
             steps{
                 withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
