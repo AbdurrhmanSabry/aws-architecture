@@ -41,8 +41,6 @@ pipeline {
         
         stage('Ansible Configuration'){
           steps{
-            sh 'cat ./ansible/group_vars/proxy.yaml'
-            sh 'cat ./ansible/group_vars/slaves.yaml'
             sh 'cd ansible'
             // ping the hosts 
             ansiblePlaybook( 
