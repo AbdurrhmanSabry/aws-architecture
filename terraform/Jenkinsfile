@@ -18,7 +18,7 @@ pipeline {
                 }
           }
         }
-        stage('terraform build'){
+        stage('terraform destroy'){
           steps{
              withAWS(credentials: 'AWS_KEYS', region: 'us-east-1') {
                 sh 'terraform -chdir=./terraform  destroy --auto-approve --var-file dev.tfvars'
