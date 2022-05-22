@@ -75,12 +75,26 @@ pipeline {
               installation:'ansible',
               colorized: true) 
           }
+          post {
+              // Infrastructure build success
+                success {
+                   slackSend(channel: 'dev-ops', color: 'good', message: "Infrastructure build success - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+               }
+               // Infrastructure build failure
+               failure {
+                   slackSend(channel: 'dev-ops', color: 'danger', message: "Terraform build failure - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+               }
+               // Any case Notificatiom
+               always {
+                   slackSend message: 'A new infrasture destrbuildoy  update'
+               }
+            }
         }
-    // stage('clean workspace') {
-    //   steps {
-    //     cleanWs()
-    // }   
-    // }
+    stage('clean workspace') {
+      steps {
+        cleanWs()
+    }   
+    }
     }
      
   }
