@@ -10,7 +10,8 @@ This code is used to provision and configure an infrasturcture on AWS.
 
 <a href="https://www.terraform.io/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/terraformio/terraformio-icon.svg" alt="terraform" width="40" height="40"/> </a> <a href="https://www.ansible.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/ansible/ansible-icon.svg" alt="ansible" width="40" height="40"/> </a>  <a href="https://aws.amazon.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" alt="aws" width="40" height="40"/> </a> <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer">  <img src="https://www.vectorlogo.zone/logos/docker/docker-official.svg" alt="docker" width="40" height="40"/> </a> <a href="https://www.jenkins.io" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="jenkins" width="40" height="40"/> </a> <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" width="40" height="40"/> </a> 
 
-### Preparing Jenkins  master
+### Getting started
+Preparing Jenkins  master
 1. Clone The repo
 ```bash
 git clone https://github.com/AbdurrhmanSabry/aws-architecture.git
@@ -78,11 +79,36 @@ exit
 docker cp ./privateKey.pem 89903b64d800:/var/jenkins_home/.ssh
 
 # access the container as root
-docker exec -it -u root 89903b64d800 /bin/bash
+docker exec -it -u root 89903b64d800In Jenkins
+Create a slack workspace
+In the new workspace, go to apps under browse slack
+Choose Jenkins CI 
+In Jenkins,Go to Manage Jenkins, Install Slack Notification plugin.   
+
+
+Create a credentials of kind secret text add the secret provided in slack
+After installation, Go to Manage Jenkins => Configuration System => Configure Slack. 
+Add the workspace name that is in the url in the slack workspace => Add the credentials => specify the default channel => Test connection
+ 
+
+Save settings in slack and Jenkins.
+ /bin/bash
 service ssh start
 apt-get install ansible 
 chmod 400 /var/jenkins_home/.ssh/privateKey.pem
 ```
+### Configure Slack
+1. Create a slack workspace
+2. In the new workspace, go to apps under browse slack
+Choose Jenkins CI 
+3. In Jenkins,Go to Manage Jenkins, Install Slack Notification plugin.   
+4. Create a credentials of kind secret text add the secret provided in slack
+5. After installation, Go to Manage Jenkins => Configuration System => Configure Slack. 
+6. Add the workspace name that is in the url in the slack workspace => Add the credentials => specify the default channel => Test connection
+<img src="./imgs/test-connection.jpg"/>
+
+7. Save settings in slack and Jenkins.
+
 ### Creating the Infrastructures
 1. Create a new Item of type pipeline, add the repo link in the repository link
 
