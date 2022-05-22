@@ -24,6 +24,20 @@ pipeline {
                 sh 'terraform -chdir=./terraform  destroy --auto-approve --var-file dev.tfvars'
                 }
           }
+          post {
+              // Infrastructure destroy success
+                success {
+                   slackSend(channel: 'dev-ops', color: 'good', message: "Infrastructure destroyed success - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+               }
+               // Infrastructure destroy failure
+               failure {
+                   slackSend(channel: 'dev-ops', color: 'danger', message: "Terraform destroyed failure - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+               }
+               // Any case Notificatiom
+               always {
+                   slackSend message: 'A new infrasture destroy  update'
+               }
+            }
         }
         stage('clean workspace') {
         steps {
