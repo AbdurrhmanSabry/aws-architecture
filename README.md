@@ -45,6 +45,8 @@ Terraform
     b. Github: username and password(access token)\
     c. Ansible: Private Key to access instances named ansible-us-east\
     d. AWS: Of type Aws credentials
+    e. In AWS, Go to systme manager parameter store  => add one wth the username for the RDS named username_rds of type string and  one with the password for the RDS user named password_rds of the type SecureString
+
 
 7. Terraform requires:\
 a. S3 bucket in us-east-1 and add its name in terraform/backend\
