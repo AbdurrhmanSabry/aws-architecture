@@ -28,6 +28,6 @@ resource "aws_elasticache_replication_group" "single-node" {
   num_cache_clusters       = 2
   engine_version       = "6.x"
   port                        = 6379
-  subnet_group_name = aws_elasticache_subnet_group.cache-sub-grp
+  subnet_group_name = aws_elasticache_subnet_group.cache-sub-grp.name
   security_group_ids = [aws_security_group.cache-sg.id]
 }
