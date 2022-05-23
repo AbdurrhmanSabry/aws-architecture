@@ -77,3 +77,6 @@ output "elasticache-endpoint" {
 output "alb-dns" {
     value = aws_lb.alb.dns_name
 }
+output "username_rds" {
+  value = data.aws_ssm_parameter.username_rds
+}

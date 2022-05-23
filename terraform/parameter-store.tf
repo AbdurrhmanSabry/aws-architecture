@@ -10,3 +10,7 @@ resource "aws_ssm_parameter" "elasticahe" {
   type  = "SecureString"
   value =  aws_elasticache_replication_group.single-node.primary_endpoint_address
 }
+data "aws_ssm_parameter" "username_rds" {
+  name = "username_rds"
+}
+
