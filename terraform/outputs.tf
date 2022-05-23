@@ -69,8 +69,11 @@ output "rds-endpoint" {
     value = aws_db_instance.mydb.address
 }
 output "elasticache-endpoint" {
-    value = aws_elasticache_cluster.cache_cluster.cluster_address
+    #value = aws_elasticache_cluster.cache_cluster.replication_group_id
+   value = aws_elasticache_replication_group.single-node.primary_endpoint_address
+   # aws_elasticache_replication_group.default.*.configuration_endpoint_address
 }
+        
 output "alb-dns" {
     value = aws_lb.alb.dns_name
 }
