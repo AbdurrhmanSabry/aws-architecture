@@ -35,8 +35,7 @@ pipeline {
                 sh 'cat ./ansible/group_vars/slaves.yaml'
                 sh 'cat ./ansible/group_vars/proxy.yaml'
                 sh 'cat ./ansible/files/nginx.conf'
-                sh 'terraform -chdir=./terraform output -raw elasticache-endpoint'
-                sh 'terraform -chdir=./terraform output -raw username_rds'
+               
                 }
           }
         }
