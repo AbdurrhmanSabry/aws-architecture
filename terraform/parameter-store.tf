@@ -13,4 +13,9 @@ resource "aws_ssm_parameter" "elasticahe" {
 data "aws_ssm_parameter" "username_rds" {
   name = "username_rds"
 }
+data "aws_ssm_parameter" "password_rds" {
+  name = "password_rds"
+  with_decryption = true
+}
+
 
