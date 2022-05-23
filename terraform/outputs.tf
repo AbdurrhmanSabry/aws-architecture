@@ -79,4 +79,5 @@ output "alb-dns" {
 }
 output "username_rds" {
   value = data.aws_ssm_parameter.username_rds
+  sensitive = true
 }
