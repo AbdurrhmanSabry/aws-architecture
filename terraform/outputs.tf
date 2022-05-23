@@ -66,10 +66,10 @@ output "private-ec2-ip" {
   value = aws_instance.application.private_ip
 }
 output "rds-endpoint" {
-    value = aws_db_instance.mydb.endpoint
+    value = aws_db_instance.mydb.address
 }
 output "elasticache-endpoint" {
-    value = aws_elasticache_cluster.cache_cluster.configuration_endpoint
+    value = aws_elasticache_cluster.cache_cluster.cluster_address
 }
 output "alb-dns" {
     value = aws_lb.alb.dns_name
